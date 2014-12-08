@@ -1,0 +1,19 @@
+name: ${project.name}
+main: ${project.groupId}.${project.artifactId}.Plugin
+version: ${project.version}
+author: ${project.author}
+depend: [data, WorldEdit]
+commands:
+   example:
+      aliases: [ex]
+      permission: Spawn.ex
+
+permissions:
+   Spawn.ex:
+      description: description
+      default: true
+      children:
+         Spawn.test: true
+
+   Spawn.test:
+      description: a test child permissions

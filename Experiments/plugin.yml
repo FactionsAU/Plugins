@@ -1,0 +1,20 @@
+name: ${project.name}
+main: ${project.groupId}.${project.artifactId}.Plugin
+version: ${project.version}
+author: ${project.author}
+depend: []
+commands:
+   packet:
+   example:
+      aliases: [ex]
+      permission: Experiments.ex
+
+permissions:
+   Experiments.ex:
+      description: description
+      default: true
+      children:
+         Experiments.test: true
+
+   Experiments.test:
+      description: a test child permissions
