@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 /**
  * Collection of regions/chunks responsible for the management of RegionReferences & storage location.
  */
-public class LoadedChunks implements Iterable<Chunk>{
+public class RegionCache implements Iterable<Chunk>{
 
     private final Map<RegionCoord, RegionReference> regions;
     private final File storageDirectory;
@@ -22,7 +22,7 @@ public class LoadedChunks implements Iterable<Chunk>{
      * @param regions
      * @param storageDirectory
      */
-    LoadedChunks(Map<RegionCoord, RegionReference> regions, File storageDirectory) {
+    RegionCache(Map<RegionCoord, RegionReference> regions, File storageDirectory) {
         this.regions = regions;
         this.storageDirectory = storageDirectory;
     }

@@ -22,7 +22,7 @@ public class ChunkListener implements Listener{
 
     private final Plugin plugin;
     private final File storageDirectory;
-    private final LoadedChunks loadedChunks ;
+    private final RegionCache regionCache;
 
     /**
      * Only construct this object after the worlds are loaded
@@ -39,7 +39,7 @@ public class ChunkListener implements Listener{
             storageDirectory.mkdirs();
         }
 
-        loadedChunks = new LoadedChunks(new HashMap<RegionCoord, RegionReference>(), storageDirectory);
+        regionCache = new RegionCache(new HashMap<RegionCoord, RegionReference>(), storageDirectory);
         onInit();
     }
 
@@ -48,7 +48,7 @@ public class ChunkListener implements Listener{
     // Not sure if this is a good thing, or if the world save should be delegated to the LoadedChunks itself.
     @EventHandler(priority = EventPriority.MONITOR)
     private void onWorldSave(WorldSaveEvent e){
-        for(Chunk c:loadedChunks){
+        for(Chunk c: regionCache){
             onChunkSave(c);
         }
     }
@@ -72,7 +72,7 @@ public class ChunkListener implements Listener{
     //      Saving, is the correct thing to do.
     //      Not saving, potential DeSync. this should be avoidable
     protected void onDisable(){
-        loadedChunks.flush();
+        regionCache.flush();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -84,16 +84,16 @@ public class ChunkListener implements Listener{
     private void onChunkUnload(ChunkUnloadEvent e){
         //TODO: add a check to see if chunk was saved if the API ever appears...
         onChunkSave(e.getChunk());
-        loadedChunks.remove(e.getChunk());
+        regionCache.remove(e.getChunk());
     }
 
     private void onChunkLoad(Chunk c){
-        loadedChunks.add(c);
+        regionCache.add(c);
     }
 
     private void onChunkSave(Chunk c) {
         //write file
-        loadedChunks.save(c);
+        regionCache.save(c);
     }
 
     public static File getDefaultDirectory(Plugin p) {
