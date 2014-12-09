@@ -38,11 +38,19 @@ public class RegionReference implements Iterable<Chunk> {
     }
 
     public void add(Chunk c) {
-        chunks.put(new ChunkCoord(c), new ChunkReference(c, false));
+        ChunkCoord cc = new ChunkCoord(c);
+        if(chunks.containsKey(cc)) {
+            throw new IllegalArgumentException("Chunk already loaded");
+        }
+        chunks.put(cc, new ChunkReference(c, false));
     }
 
     public void remove(Chunk c) {
-        chunks.remove(new ChunkCoord(c));
+        ChunkCoord cc = new ChunkCoord(c);
+        if(!chunks.containsKey(cc)){
+            throw new IllegalArgumentException("Chunk was not loaded");
+        }
+        chunks.remove(cc);
     }
 
     public boolean noReferences() {
