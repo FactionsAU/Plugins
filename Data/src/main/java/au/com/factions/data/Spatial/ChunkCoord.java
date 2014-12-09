@@ -1,12 +1,13 @@
 package au.com.factions.data.Spatial;
 
+import au.com.factions.data.datainterface.Identity;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.UUID;
 
-public class ChunkCoord extends PairI{
+public class ChunkCoord extends PairI implements Identity{
     private final UUID world;
 
     ChunkCoord(World w, int x, int z) {

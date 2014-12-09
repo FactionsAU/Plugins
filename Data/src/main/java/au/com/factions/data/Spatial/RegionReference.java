@@ -1,5 +1,6 @@
 package au.com.factions.data.Spatial;
 
+import au.com.factions.data.datainterface.FileReference;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
 import org.bukkit.Chunk;
@@ -12,7 +13,7 @@ import java.util.Map;
  * Holds a reference to a file, responsible for persisting the data in the chunk references,
  * and tracking whether writing is needed.
  */
-public class RegionReference implements Iterable<Chunk> {
+public class RegionReference implements Iterable<Chunk>,FileReference {
 
     private final RegionCoord coord;
     private final Map<ChunkCoord,ChunkReference> chunks;

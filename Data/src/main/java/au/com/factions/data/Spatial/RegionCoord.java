@@ -1,5 +1,6 @@
 package au.com.factions.data.Spatial;
 
+import au.com.factions.data.datainterface.Identity;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -9,7 +10,7 @@ import java.util.UUID;
 /**
  * Created by Ryan on 6/12/2014.
  */
-public class RegionCoord extends PairI{
+public class RegionCoord extends PairI implements Identity{
 
     private final UUID world;
 
