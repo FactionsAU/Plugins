@@ -51,7 +51,7 @@ public class RegionReference implements Iterable<Chunk> {
 
     @Override
     public Iterator<Chunk> iterator() {
-        return Iterators.transform(chunks.values().iterator(),ref->ref.getChunk());
+        return Iterators.transform(chunks.values().iterator(), ref->ref.getChunk());
     }
 }
 //TODO

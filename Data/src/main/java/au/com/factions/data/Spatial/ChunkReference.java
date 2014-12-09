@@ -7,8 +7,11 @@ import org.bukkit.Chunk;
  * TODO: May possibly be the container for chunk data at some point, or should regions own the data since it's per region?
  */
 public class ChunkReference {
+
     private final Chunk chunk;
+    //Whether the data associated with this chunk has been modified, without being persisted to disk
     private boolean isDirty;
+
 
     ChunkReference(Chunk chunk, boolean isDirty) {
         this.chunk = chunk;

@@ -14,6 +14,10 @@ import org.bukkit.event.world.WorldSaveEvent;
 import java.io.File;
 import java.util.HashMap;
 
+/**
+ * Listens for bukkit events, and adapts it for a given LoadedChunks
+ * translates world save events, + handles enable and disable for the chunk datastore.
+ */
 public class ChunkListener implements Listener{
 
     private final Plugin plugin;
@@ -23,17 +27,21 @@ public class ChunkListener implements Listener{
     /**
      * Only construct this object after the worlds are loaded
      * **/
-    ChunkListener(Plugin p){
+    public ChunkListener(Plugin p){
+        this(p, getDefaultDirectory(p));
+    }
+
+    //allow us to pass in a directory for testing)
+    private ChunkListener(Plugin p, File directory){
         this.plugin = p;
-        storageDirectory = new File(p.getDataFolder(),"worlds");
+        this.storageDirectory = directory;
         if (!storageDirectory.isDirectory()){
             storageDirectory.mkdirs();
         }
+
         loadedChunks = new LoadedChunks(new HashMap<RegionCoord, RegionReference>(), storageDirectory);
         onInit();
     }
-
-
 
     //on save, trigger saving for all known loaded chunks in datastore,
     // this is possibly different to all loaded chunks on server
@@ -45,7 +53,7 @@ public class ChunkListener implements Listener{
         }
     }
 
-    //on Init, load all loaded chunks.
+    //on Init, emulate chunk load events for all the previously loaded chunks.
     private void onInit(){
         for(World w:Bukkit.getWorlds()){
             for(Chunk c:w.getLoadedChunks()){
@@ -88,5 +96,7 @@ public class ChunkListener implements Listener{
         loadedChunks.save(c);
     }
 
-
+    public static File getDefaultDirectory(Plugin p) {
+        return new File(p.getDataFolder(),"worlds");
+    }
 }
